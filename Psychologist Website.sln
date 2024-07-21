@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "PsikoWeb.Core\Core.csproj", "{2A929EC0-FD3A-4C53-9E41-D591A08678E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "PsikoWebRepository\Repository.csproj", "{0D2BDBDF-D13C-4621-9FAA-B2D9ECBABEE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "PsikoWeb.Service\Service.csproj", "{13426BF2-0AD5-4BF3-B265-6BF1E29BC435}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsikoWebApi", "PsikoWebApi\PsikoWebApi.csproj", "{7B543579-2071-4E58-86D3-6098170B1229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsikoWeb.WebApp", "PsikoWeb.WebApp\PsikoWeb.WebApp.csproj", "{81E49606-700B-437B-B25B-357FF234EE70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{25EFBFB1-F8CD-461A-B4CE-2D0ABDC7A070}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A929EC0-FD3A-4C53-9E41-D591A08678E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A929EC0-FD3A-4C53-9E41-D591A08678E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A929EC0-FD3A-4C53-9E41-D591A08678E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A929EC0-FD3A-4C53-9E41-D591A08678E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2BDBDF-D13C-4621-9FAA-B2D9ECBABEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2BDBDF-D13C-4621-9FAA-B2D9ECBABEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2BDBDF-D13C-4621-9FAA-B2D9ECBABEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2BDBDF-D13C-4621-9FAA-B2D9ECBABEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13426BF2-0AD5-4BF3-B265-6BF1E29BC435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13426BF2-0AD5-4BF3-B265-6BF1E29BC435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13426BF2-0AD5-4BF3-B265-6BF1E29BC435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13426BF2-0AD5-4BF3-B265-6BF1E29BC435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B543579-2071-4E58-86D3-6098170B1229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B543579-2071-4E58-86D3-6098170B1229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B543579-2071-4E58-86D3-6098170B1229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B543579-2071-4E58-86D3-6098170B1229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E49606-700B-437B-B25B-357FF234EE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E49606-700B-437B-B25B-357FF234EE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E49606-700B-437B-B25B-357FF234EE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E49606-700B-437B-B25B-357FF234EE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25EFBFB1-F8CD-461A-B4CE-2D0ABDC7A070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25EFBFB1-F8CD-461A-B4CE-2D0ABDC7A070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25EFBFB1-F8CD-461A-B4CE-2D0ABDC7A070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25EFBFB1-F8CD-461A-B4CE-2D0ABDC7A070}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A2C420D-AEA2-4F3D-B853-3F6121AE202D}
+	EndGlobalSection
+EndGlobal
