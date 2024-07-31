@@ -42,7 +42,7 @@ namespace Service.Services
             return await _repository.AnyAsync(expression);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsyn()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _repository.GetAll().ToListAsync();
         }

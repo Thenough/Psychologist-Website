@@ -13,7 +13,7 @@ namespace Core.Services
         Task<T> GetByIdAsync(int id);
         //IQueryable döndüğümüzde, sorgularımız direk veritabanına gitmez. ToList gibi sorgular kullanıldığı zaman veritabanına gider.
         //Yani veritabanı için sorgu yapmıyoruz. Yapılacak sorguyu yazıyoruz.
-        Task<IEnumerable<T>> GetAllAsyn();
+        Task<IEnumerable<T>> GetAllAsync();
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
         Task<IEnumerable<T>>  AddRangeAysnc(IEnumerable<T> entities);

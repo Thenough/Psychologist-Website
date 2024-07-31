@@ -9,16 +9,14 @@ using System.Threading.Tasks;
 
 namespace Repository.Configurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-            builder.ToTable("Product");
-            builder.Property(x => x.Stock).IsRequired();
-            builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)");
+            builder.ToTable("Category");
         }
     }
 }

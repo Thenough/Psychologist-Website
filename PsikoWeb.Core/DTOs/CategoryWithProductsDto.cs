@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Core.DTOs
 {
-    public class ProductDTO : BaseDTO
+    public class CategoryWithProductsDto:CategoryDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Stock { get; set; }
-        public decimal Price { get; set; }
-        public int CategoryId { get; set; }
+        public List<ProductDTO> Products { get; set; } = new List<ProductDTO>();
+
     }
 }

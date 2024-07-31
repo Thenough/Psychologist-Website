@@ -19,7 +19,8 @@ namespace Repository
         public DbSet<Admin> Admin {  get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employee { get; set; }
-
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Product> Product { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

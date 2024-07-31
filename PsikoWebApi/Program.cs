@@ -7,7 +7,7 @@ using Core.Repositories;
 using Repository.Repositories;
 using Core.Services;
 using Service.Services;
-using Service.Services.Mapping;
+using Service.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductRepositories, ProductRepository>();
+builder.Services.AddScoped<IProductServis, ProductService>();
+
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>
