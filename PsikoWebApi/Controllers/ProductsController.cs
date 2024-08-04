@@ -5,6 +5,7 @@ using Core.Models.Concrete;
 using Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PsikoWebApi.Filter;
 
 namespace PsikoWebApi.Controllers
 {
