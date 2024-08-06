@@ -36,8 +36,9 @@ namespace PsikoWebApi.Controllers
             return Ok(CustomResponseDTO<List<ProductDTO>>.Success(200,productsDtos));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<>))]
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAll(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var product = await _service.GetByIdAsync(id);
             var productsDto = _mapper.Map<ProductDTO>(product);
@@ -58,6 +59,8 @@ namespace PsikoWebApi.Controllers
             await _service.UpdateAsync(_mapper.Map<Product>(productDto));
             return Ok(CustomResponseDTO<ProductDTO>.Success(204));
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<>))]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Remove(int id)
         {

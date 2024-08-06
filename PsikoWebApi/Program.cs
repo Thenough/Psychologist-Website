@@ -13,6 +13,7 @@ using Core.DTOs;
 using Service.Validations;
 using PsikoWebApi.Filter;
 using Microsoft.AspNetCore.Mvc;
+using PsikoWebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilte
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
@@ -51,7 +53,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCustomException();
 app.UseAuthorization();
 
 app.MapControllers();
