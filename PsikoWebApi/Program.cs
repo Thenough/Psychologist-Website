@@ -14,6 +14,9 @@ using Service.Validations;
 using PsikoWebApi.Filter;
 using Microsoft.AspNetCore.Mvc;
 using PsikoWebApi.Middlewares;
+using Autofac.Extensions.DependencyInjection;
+using PsikoWebApi.Modules;
+using Autofac;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,14 +29,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressMode
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductRepositories, ProductRepository>();
-builder.Services.AddScoped<IProductServis, ProductService>();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
@@ -42,6 +38,12 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
 });
+
+builder.Host.UseServiceProviderFactory
+    (
+        new AutofacServiceProviderFactory()
+    );
+builder.Host.ConfigureContainer<ContainerBuilder>(conteinerBuilder => conteinerBuilder.RegisterModule(new RepoServiceModule()));
 
 var app = builder.Build();
 
