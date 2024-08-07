@@ -10,6 +10,6 @@ namespace Core.Services
 {
     public interface IProductServis:IService<Product>
     {
-        Task<List<ProductWithCategoryDto>> GetProductsWithCategory();
+        Task<CustomResponseDTO<List<ProductWithCategoryDto>>> GetProductsWithCategory();
     }
 }

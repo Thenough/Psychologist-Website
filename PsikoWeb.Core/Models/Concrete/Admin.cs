@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core.Models.Concrete
 {
-    public class Admin
+    public class Admin:BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string PassWord { get; set; }
 
