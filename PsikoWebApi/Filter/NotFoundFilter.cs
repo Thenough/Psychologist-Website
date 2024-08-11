@@ -27,12 +27,12 @@ namespace PsikoWebApi.Filter
 
             var id = (int)idValue;
             var anyEntity = await _service.AnyAsync(x => x.Id == id);
-            if(anyEntity)
+            if (anyEntity)
             {
                 await next.Invoke();
                 return;
             }
-            context.Result = new NotFoundObjectResult(CustomResponseDTO<NoContent>.Fail(404,$"{typeof(T).Name}({id}) Not Found"));
+            context.Result = new NotFoundObjectResult(CustomResponseDTO<NoContent>.Fail(404, $"{typeof(T).Name}({id}) Not Found"));
         }
     }
 }

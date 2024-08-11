@@ -1,7 +1,5 @@
 ﻿using Core.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PsikoWebApi.Filter;
 
 namespace PsikoWebApi.Controllers
 {
@@ -19,7 +17,7 @@ namespace PsikoWebApi.Controllers
         [HttpGet("[action]/{categoryId}")]
         public async Task<IActionResult> GetSingleWithCategoryByIdProduct(int categoryId)
         {
-            return Ok( await _categoryService.GetSingleCategoryByIdWithProductsAsync(categoryId));
+            return Ok(await _categoryService.GetSingleCategoryByIdWithProductsAsync(categoryId));
         }
     }
 }

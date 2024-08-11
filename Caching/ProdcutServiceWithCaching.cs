@@ -7,17 +7,11 @@ using Core.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Service.Exceptions;
-using Service.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Caching
 {
-    public class ProdcutServiceWithCaching : IProductServis
+    public class ProdcutServiceWithCaching : IProductService
     {
         private const string CacheProductKey = "productsCache";
         private readonly IMapper _mapper;
@@ -31,7 +25,7 @@ namespace Caching
             _memoryCache = memoryCache;
             _mapper = mapper;
 
-            if(!_memoryCache.TryGetValue(CacheProductKey,out _))
+            if (!_memoryCache.TryGetValue(CacheProductKey, out _))
             {
                 _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory().Result);
             }
@@ -67,18 +61,18 @@ namespace Caching
         public Task<Product> GetByIdAsync(int id)
         {
             var product = _memoryCache.Get<List<Product>>(CacheProductKey).FirstOrDefault(x => x.Id == id);
-            if(product == null)
+            if (product == null)
             {
                 throw new NotFoundException($"{typeof(Product).Name}({id}) Not Found");
             }
             return Task.FromResult(product);
         }
 
-        public Task<CustomResponseDTO<List<ProductWithCategoryDto>>> GetProductsWithCategory()
+        public Task<List<ProductWithCategoryDto>> GetProductsWithCategory()
         {
             var products = _memoryCache.Get<IEnumerable<Product>>(CacheProductKey);
             var productsWithCategoryDto = _mapper.Map<List<ProductWithCategoryDto>>(products);
-            return Task.FromResult(CustomResponseDTO<List<ProductWithCategoryDto>>.Success(200, productsWithCategoryDto));
+            return Task.FromResult(productsWithCategoryDto);
         }
 
         public async Task RemoveAsync(Product entity)
@@ -109,7 +103,7 @@ namespace Caching
 
         public async Task CacheAllProducts()
         {
-            _memoryCache.Set(CacheProductKey,await _repository.GetAll().ToListAsync());
+            _memoryCache.Set(CacheProductKey, await _repository.GetAll().ToListAsync());
         }
     }
 }

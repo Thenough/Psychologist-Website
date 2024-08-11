@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace Core.Services
 {
@@ -16,7 +11,7 @@ namespace Core.Services
         Task<IEnumerable<T>> GetAllAsync();
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
-        Task<IEnumerable<T>>  AddRangeAysnc(IEnumerable<T> entities);
+        Task<IEnumerable<T>> AddRangeAysnc(IEnumerable<T> entities);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);

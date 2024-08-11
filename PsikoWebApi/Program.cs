@@ -1,22 +1,15 @@
-using Repository;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using Core.UnitOfWorks;
-using Repository.UnitOfWorks;
-using Core.Repositories;
-using Repository.Repositories;
-using Core.Services;
-using Service.Services;
-using Service.Mapping;
-using FluentValidation.AspNetCore;
-using Core.DTOs;
-using Service.Validations;
-using PsikoWebApi.Filter;
-using Microsoft.AspNetCore.Mvc;
-using PsikoWebApi.Middlewares;
-using Autofac.Extensions.DependencyInjection;
-using PsikoWebApi.Modules;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PsikoWebApi.Filter;
+using PsikoWebApi.Middlewares;
+using PsikoWebApi.Modules;
+using Repository;
+using Service.Mapping;
+using Service.Validations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +17,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute())).AddFluentValidation(x =>x.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>());
+builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute())).AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>());
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MapProfile));
-
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>

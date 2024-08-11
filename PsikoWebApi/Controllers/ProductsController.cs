@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Core.DTOs;
-using Core.Models.Abstarct;
 using Core.Models.Concrete;
 using Core.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PsikoWebApi.Filter;
 
@@ -14,8 +12,8 @@ namespace PsikoWebApi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IProductServis _service;
-        public ProductsController(IMapper mapper, IProductServis productServis)
+        private readonly IProductService _service;
+        public ProductsController(IMapper mapper, IProductService productServis)
         {
             _mapper = mapper;
             _service = productServis;
@@ -33,7 +31,7 @@ namespace PsikoWebApi.Controllers
         {
             var product = await _service.GetAllAsync();
             var productsDtos = _mapper.Map<List<ProductDTO>>(product.ToList());
-            return Ok(CustomResponseDTO<List<ProductDTO>>.Success(200,productsDtos));
+            return Ok(CustomResponseDTO<List<ProductDTO>>.Success(200, productsDtos));
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Product>))]
@@ -50,7 +48,7 @@ namespace PsikoWebApi.Controllers
         {
             var product = await _service.AddAsync(_mapper.Map<Product>(productDTO));
             var productDto = _mapper.Map<ProductDTO>(product);
-            return StatusCode(201,productDto);
+            return StatusCode(201, productDto);
         }
 
         [HttpPut]

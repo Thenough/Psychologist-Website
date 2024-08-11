@@ -1,9 +1,7 @@
 ﻿using Autofac;
-using Caching;
 using Core.Repositories;
 using Core.Services;
 using Core.UnitOfWorks;
-using PsikoWebApi.Filter;
 using Repository;
 using Repository.Repositories;
 using Repository.UnitOfWorks;
@@ -12,7 +10,7 @@ using Service.Services;
 using System.Reflection;
 using Module = Autofac.Module;
 
-namespace PsikoWebApi.Modules
+namespace PsikoWeb.Modules
 {
     public class RepoServiceModule : Module
     {
@@ -21,7 +19,6 @@ namespace PsikoWebApi.Modules
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterGeneric(typeof(NotFoundFilter<>)).AsSelf().InstancePerLifetimeScope();
 
             var apiAssembly = Assembly.GetExecutingAssembly();
             var repoAssembly = Assembly.GetAssembly(typeof(AppDbContext));
@@ -30,7 +27,7 @@ namespace PsikoWebApi.Modules
             builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            builder.RegisterType<ProdcutServiceWithCaching>().As<IProductService>();
+            builder.RegisterType<ProductService>().As<IProductService>();
         }
     }
 }

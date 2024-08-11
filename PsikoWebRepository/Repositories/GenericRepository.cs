@@ -1,12 +1,6 @@
-﻿using Core.Models.Concrete;
-using Core.Repositories;
+﻿using Core.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
@@ -16,8 +10,8 @@ namespace Repository.Repositories
         private readonly DbSet<T> _dbSet;
         public GenericRepository(AppDbContext contex)
         {
-           _contex=contex;
-            _dbSet=_contex.Set<T>();
+            _contex = contex;
+            _dbSet = _contex.Set<T>();
         }
         public async Task AddAsync(T entity)
         {
@@ -61,7 +55,7 @@ namespace Repository.Repositories
 
         public void RemoveRange(IEnumerable<T> entites)
         {
-           _dbSet.RemoveRange(entites);
+            _dbSet.RemoveRange(entites);
         }
 
         public void Update(T entity)
@@ -71,7 +65,7 @@ namespace Repository.Repositories
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-           return _dbSet.Where(expression);
+            return _dbSet.Where(expression);
         }
     }
 }

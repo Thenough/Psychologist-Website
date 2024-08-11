@@ -1,9 +1,4 @@
 ﻿using Core.UnitOfWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.UnitOfWorks
 {
@@ -21,7 +16,7 @@ namespace Repository.UnitOfWorks
 
         public async Task CommitAsync()
         {
-           await _contex.SaveChangesAsync();
+            await _contex.SaveChangesAsync();
         }
     }
 }

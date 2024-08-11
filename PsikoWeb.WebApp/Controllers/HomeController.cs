@@ -1,5 +1,5 @@
+using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using PsikoWeb.WebApp.Models;
 using System.Diagnostics;
 
 namespace PsikoWeb.WebApp.Controllers
@@ -24,9 +24,9 @@ namespace PsikoWeb.WebApp.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(ErrorViewModel errorViewModel)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(errorViewModel);
         }
     }
 }

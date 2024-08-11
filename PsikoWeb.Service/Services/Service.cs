@@ -3,13 +3,7 @@ using Core.Services;
 using Core.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Services
 {
@@ -35,7 +29,7 @@ namespace Service.Services
         {
             await _repository.AddRangeAysnc(entities);
             await _unitOfWork.CommitAsync();
-            return  entities;
+            return entities;
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
@@ -50,8 +44,8 @@ namespace Service.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-           var hasProduct = await _repository.GetByIdAsync(id);
-            if(hasProduct == null)
+            var hasProduct = await _repository.GetByIdAsync(id);
+            if (hasProduct == null)
             {
                 throw new NotFoundException($"{typeof(T).Name}({id}) Not Found");
             }

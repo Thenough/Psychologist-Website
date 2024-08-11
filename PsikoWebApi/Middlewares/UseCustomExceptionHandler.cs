@@ -10,7 +10,7 @@ namespace PsikoWebApi.Middlewares
     {
         public static void UseCustomException(this IApplicationBuilder app)
         {
-            app.UseExceptionHandler(config => 
+            app.UseExceptionHandler(config =>
             {
                 config.Run(async contex =>
                 {
@@ -27,7 +27,7 @@ namespace PsikoWebApi.Middlewares
 
                     contex.Response.StatusCode = statusCode;
 
-                    var response = CustomResponseDTO<NoContent>.Fail(statusCode,exceptionFeature.Error.Message);
+                    var response = CustomResponseDTO<NoContent>.Fail(statusCode, exceptionFeature.Error.Message);
                     await contex.Response.WriteAsync(JsonSerializer.Serialize(response));
                 });
             });
