@@ -4,10 +4,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using PsikoWeb.Modules;
 using PsikoWeb.WebApp;
+using PsikoWeb.WebApp.Services;
 using Repository;
 using Service.Mapping;
 using Service.Validations;
 using System.Reflection;
+using System.Security.Policy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,13 +30,21 @@ builder.Host.ConfigureContainer<ContainerBuilder>(conteinerBuilder => conteinerB
 builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
+builder.Services.AddHttpClient<ProductApiService>(options => 
+    {
+    options.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+    });
+builder.Services.AddHttpClient<CategoryApiService>(options => 
+    {
+        options.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+    });
 var app = builder.Build();
 
-app.UseExceptionHandler("/Home/Error");
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-  
+    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

@@ -1,4 +1,6 @@
-﻿using Core.Services;
+﻿using AutoMapper;
+using Core.DTOs;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PsikoWebApi.Controllers
@@ -8,10 +10,19 @@ namespace PsikoWebApi.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-
-        public CategoriesController(ICategoryService categoryService)
+        private readonly IMapper _mapper;
+        public CategoriesController(ICategoryService categoryService, IMapper mapper = null)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategory()
+        {
+            var categories = await _categoryService.GetAllAsync();
+            var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+            return Ok(CustomResponseDTO<List<CategoryDto>>.Success(200,categoriesDto));
         }
 
         [HttpGet("[action]/{categoryId}")]
