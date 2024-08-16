@@ -1,0 +1,31 @@
+﻿@using PsikoWeb.WebApp.Areas.Admin.Models
+
+@{
+    ViewData["Title"] = "UserList";
+}
+@model List<UserViewModel>
+<h1>Kullanıcılar</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>UserName</th>
+            <th>UserEmail</th>
+            <th>UserPhone</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserId</td>
+                <td>@item.UserName</td>
+                <td>@item.UserEmail</td>
+                <td>@item.UserPhone</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
