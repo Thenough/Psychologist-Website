@@ -1,20 +1,17 @@
 ﻿using Core.Models.Abstarct;
 using Core.Models.Concrete;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Repository
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser,AppRole,string>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
-
-        public DbSet<Admin> Admin { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Employee> Employee { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
 

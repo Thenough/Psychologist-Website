@@ -12,7 +12,7 @@ namespace Repository.Repositories
 
         public async Task<Category> GetSingleCategoryByIdWithProductsAsync(int categoryId)
         {
-            return await _contex.Category.Include(x => x.Products).Where(x => x.Id == categoryId).SingleOrDefaultAsync();
+            return await _context.Category.Include(x => x.Products).Where(x => x.Id == categoryId).SingleOrDefaultAsync();
         }
     }
 }

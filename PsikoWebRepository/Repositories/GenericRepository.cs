@@ -6,12 +6,12 @@ namespace Repository.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly AppDbContext _contex;
+        protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
         public GenericRepository(AppDbContext contex)
         {
-            _contex = contex;
-            _dbSet = _contex.Set<T>();
+            _context = contex;
+            _dbSet = _context.Set<T>();
         }
         public async Task AddAsync(T entity)
         {

@@ -12,7 +12,7 @@ namespace Repository.Repositories
 
         public async Task<List<Product>> GetProductsWithCategory()
         {
-            return await _contex.Product.Include(x => x.Category).ToListAsync();
+            return await _context.Product.Include(x => x.Category).ToListAsync();
         }
     }
 }

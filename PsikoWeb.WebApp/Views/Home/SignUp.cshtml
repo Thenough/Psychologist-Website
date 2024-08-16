@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "SignUp";
+}
+@model SignUpViewModule
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+          <h2>Kullanıcı Kayıt Formu</h2>
+          <form asp-controller="Home" asp-action="SignUp" method="SignUp">
+              <div class="row-mb-3">
+                <label for="UserName" class="col-md-4 col-form-label" asp-for="UserName"></label>
+                <div class="col-md-8">
+                    <input asp-for="UserName" class="form-control">
+                </div>
+              </div>
+            <div class="row-mb-3">
+                <label for="Email" class="col-md-4 col-form-label" asp-for="Email"></label>
+                <div class="col-md-8">
+                    <input asp-for="Email" class="form-control">
+                </div>
+            </div>
+            <div class="row-mb-3">
+                <label for="PhoneNumber" class="col-md-4 col-form-label" asp-for="PhoneNumber"></label>
+                <div class="col-md-8">
+                    <input asp-for="PhoneNumber" class="form-control">
+                </div>
+            </div>
+            <div class="row-mb-3">
+                <label for="PassWord" class="col-md-4 col-form-label" asp-for="PassWord"></label>
+                <div class="col-md-8">
+                    <input asp-for="PassWord" class="form-control">
+                </div>
+            </div>
+            <div class="row-mb-3">
+                <label for="PassWordConfirm" class="col-md-4 col-form-label" asp-for="PassWordConfirm"></label>
+                <div class="col-md-8">
+                    <input asp-for="PassWordConfirm" class="form-control">
+                </div>
+            </div>
+            <br />
+            <div class="col-md-8 d-flex justify-content-center align-items-center">
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            </div>
+            
+          </form>
+      </div>
+     </div>
+
