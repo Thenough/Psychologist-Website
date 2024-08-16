@@ -39,7 +39,16 @@ namespace PsikoWeb.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModule request)
         {
-          var identityResult = await  _userManager.CreateAsync(new() {UserName = request.UserName,PhoneNumber=request.PhoneNumber,Email=request.Email},request.PassWord);
+          var identityResult = await  _userManager.CreateAsync(new() {UserName = request.UserName,PhoneNumber=request.PhoneNumber,Email=request.Email},request.PassWordConfirm);
+            if (identityResult.Succeeded)
+            {
+               TempData["SuccessMessage"] = "Üyelik kayýt iþlemi baþarýlý bir þekilde gerçekleþmiþtir";
+                return RedirectToAction(nameof(HomeController.SignUp));
+            }
+            foreach (IdentityError item in identityResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty,item.Description);
+            }
             return View();
         }
 
