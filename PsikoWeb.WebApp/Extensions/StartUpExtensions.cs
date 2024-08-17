@@ -14,6 +14,8 @@ namespace PsikoWeb.WebApp.Extensions
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = "abcçdefgğhiıjklmnoöprsştuüvyzABCÇDEFGĞHİIJKLMNOÖPRSŞTUÜVYZ1234567890_.!";
                 options.Password.RequiredLength = 6;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
             })
             .AddPasswordValidator<PasswordValidator>()
             .AddUserValidator<UserValidator>()
