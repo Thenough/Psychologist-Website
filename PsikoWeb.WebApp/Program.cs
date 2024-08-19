@@ -7,6 +7,7 @@ using PsikoWeb.Modules;
 using PsikoWeb.WebApp;
 using PsikoWeb.WebApp.CustomValidations;
 using PsikoWeb.WebApp.Extensions;
+using PsikoWeb.WebApp.OptionsModel;
 using PsikoWeb.WebApp.Services;
 using Repository;
 using Service.Mapping;
@@ -24,6 +25,8 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
 });
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddIdentityWithExtensions();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

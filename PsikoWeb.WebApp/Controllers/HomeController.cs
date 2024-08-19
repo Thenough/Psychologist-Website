@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PsikoWeb.WebApp.Modules;
+using PsikoWeb.WebApp.Services;
 using Repository;
 using System.Diagnostics;
 
@@ -13,11 +14,13 @@ namespace PsikoWeb.WebApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IEmailService _emailService;
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailService emailService)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -91,6 +94,34 @@ namespace PsikoWeb.WebApp.Controllers
             ModelState.AddModelError(string.Empty, "Giriþ baþarýsýz. Lütfen bilgilerinizi kontrol edin ve tekrar deneyin.");
 
             return View();
+        }
+
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> ForgetPassword(ForgetPasswordViewModule request)
+        {
+            var hasUser = await _userManager.FindByEmailAsync(request.Email);
+            if (hasUser == null) 
+            {
+                ModelState.AddModelError(string.Empty,"Bu e-mail adresine sahip kullanýcý bulunamamýþtýr");
+                return View();
+            }
+
+            string passwordResetToken =await _userManager.GeneratePasswordResetTokenAsync(hasUser);
+
+            var passwordResetLink = Url.Action("ResetPassword","Home",new
+            {
+                userId = hasUser.Id,
+                Token = passwordResetToken
+            },HttpContext.Request.Scheme,"localhost");
+            // https://localost:7238?userId=1213123&token=askdjhsajhgdquweq
+            await _emailService.SendResetPasswordEmail(passwordResetLink,hasUser.Email);
+
+            TempData["SuccessMessage"] = "Þifre yenileme linki e posta adresinize gönderilmiþtir";
+            return RedirectToAction(nameof(ForgetPassword));
         }
     }
 }

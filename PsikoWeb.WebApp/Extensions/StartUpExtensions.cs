@@ -9,6 +9,10 @@ namespace PsikoWeb.WebApp.Extensions
     {
         public static void AddIdentityWithExtensions(this IServiceCollection services)
         {
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromHours(1);
+            });
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -20,7 +24,8 @@ namespace PsikoWeb.WebApp.Extensions
             .AddPasswordValidator<PasswordValidator>()
             .AddUserValidator<UserValidator>()
             .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
-            .AddEntityFrameworkStores<AppDbContext>(); 
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<AppDbContext>();
         }
     }
 }
