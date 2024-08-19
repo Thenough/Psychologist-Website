@@ -1,4 +1,5 @@
 using Core.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PsikoWeb.WebApp.Modules;

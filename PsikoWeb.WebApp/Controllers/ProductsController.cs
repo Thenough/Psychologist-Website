@@ -2,12 +2,14 @@
 using Core.DTOs;
 using Core.Models.Concrete;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PsikoWeb.WebApp.Services;
 
 namespace PsikoWeb.WebApp.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ProductApiService _productApiService;

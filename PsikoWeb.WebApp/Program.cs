@@ -40,7 +40,16 @@ builder.Services.AddHttpClient<CategoryApiService>(options =>
 {
     options.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
 });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    var cookieBuilder = new CookieBuilder();
+    cookieBuilder.Name = "cookieName";
+    options.LoginPath = new PathString("/Home/SignIn");
+    options.Cookie = cookieBuilder;
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.SlidingExpiration = true;
 
+});
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
