@@ -44,7 +44,7 @@ namespace PsikoWeb.WebApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp(SignUpViewModule request)
+        public async Task<IActionResult> SignUp(SignUpViewModel request)
         {
             if(!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace PsikoWeb.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> SignIn(SignInViewModule module,string? returnUrl = null)
+        public async Task <IActionResult> SignIn(SignInViewModel module,string? returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Action("Index","Home");
 
@@ -102,7 +102,7 @@ namespace PsikoWeb.WebApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task <IActionResult> ForgetPassword(ForgetPasswordViewModule request)
+        public async Task <IActionResult> ForgetPassword(ForgetPasswordViewModel request)
         {
             var hasUser = await _userManager.FindByEmailAsync(request.Email);
             if (hasUser == null) 
@@ -131,7 +131,7 @@ namespace PsikoWeb.WebApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModule request)
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel request)
         {
             string userId = TempData["userId"]!.ToString();
             string token = TempData["token"]!.ToString();

@@ -12,7 +12,7 @@ using Module = Autofac.Module;
 
 namespace PsikoWeb.Modules
 {
-    public class RepoServiceModule : Module
+    public class RepoServiceModel : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

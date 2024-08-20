@@ -2,7 +2,7 @@
 
 namespace PsikoWeb.WebApp.Modules
 {
-    public class ResetPasswordModule
+    public class ResetPasswordModel
     {
         [Required(ErrorMessage = "Lütfen şifre giriniz")]
         [Display(Name = "Yeni Şifre :")]

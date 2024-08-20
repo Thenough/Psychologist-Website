@@ -30,7 +30,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddIdentityWithExtensions();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModel()));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(MapProfile));

@@ -2,7 +2,7 @@
 
 namespace PsikoWeb.WebApp.Modules
 {
-    public class ForgetPasswordViewModule
+    public class ForgetPasswordViewModel
     {
         [Required(ErrorMessage = "Email alanı boş bırakılamaz")]
         [EmailAddress(ErrorMessage = "Email düzgün formatta girilmedi")]

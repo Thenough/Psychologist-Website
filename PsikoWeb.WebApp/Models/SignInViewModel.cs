@@ -2,13 +2,13 @@
 
 namespace PsikoWeb.WebApp.Modules
 {
-    public class SignInViewModule
+    public class SignInViewModel
     {
-        public SignInViewModule()
+        public SignInViewModel()
         {
             
         }
-        public SignInViewModule(string email, string password)
+        public SignInViewModel(string email, string password)
         {
             Email = email;
             Password = password;
