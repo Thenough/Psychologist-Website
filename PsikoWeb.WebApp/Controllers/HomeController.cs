@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PsikoWeb.WebApp.Modules;
 using PsikoWeb.WebApp.Services;
 using Repository;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PsikoWeb.WebApp.Controllers
@@ -116,12 +117,45 @@ namespace PsikoWeb.WebApp.Controllers
             {
                 userId = hasUser.Id,
                 Token = passwordResetToken
-            },HttpContext.Request.Scheme,"localhost");
+            },HttpContext.Request.Scheme,"localhost:7238");
             // https://localost:7238?userId=1213123&token=askdjhsajhgdquweq
             await _emailService.SendResetPasswordEmail(passwordResetLink,hasUser.Email);
 
             TempData["SuccessMessage"] = "Þifre yenileme linki e posta adresinize gönderilmiþtir";
             return RedirectToAction(nameof(ForgetPassword));
+        }
+        public  IActionResult ResetPassword(string userId,string token)
+        {
+            TempData["userId"] = userId;
+            TempData["token"] = token;   
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModule request)
+        {
+            string userId = TempData["userId"]!.ToString();
+            string token = TempData["token"]!.ToString();
+            var hasUser = await _userManager.FindByIdAsync(userId!);
+            if (userId == null || token == null)
+            {
+                throw new Exception("Bir hata meydana geldi");
+            }
+            if (hasUser == null)
+            {
+                ModelState.AddModelError(string.Empty, "Kullanýcý bulunamamýþtýr");
+                return View();
+            }
+            IdentityResult result = await _userManager.ResetPasswordAsync(hasUser, token!, request.PassWord);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Þifreniz baþarýyla yenilenmiþtir";
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty,"Þifrenizi deðiþtirirken hata oluþtu");
+               
+            }
+            return View();
         }
     }
 }
