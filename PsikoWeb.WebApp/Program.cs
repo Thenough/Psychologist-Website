@@ -51,7 +51,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie = cookieBuilder;
     options.ExpireTimeSpan = TimeSpan.FromDays(7);
     options.SlidingExpiration = true;
-
+    options.AccessDeniedPath = new PathString("/Member/AccessDenied");
 });
 var app = builder.Build();
 

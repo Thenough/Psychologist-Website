@@ -24,5 +24,13 @@ namespace PsikoWeb.WebApp.Controllers
            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> AccessDenied (string ReturnUrl)
+        {
+            string message = string.Empty;
+            message = "Bu sayfayı görmeye yetkiniz yoktur.";
+            ViewBag.Message = message;
+            return View();
+        }
     }
 }
