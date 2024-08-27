@@ -2,6 +2,39 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2>Roller</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <a class="btn btn-primary" asp-area="admin" asp-controller="Roles" asp-action="RoleAdd">Rol Ekle</a>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Role Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                    <a class="btn btn-warning" asp-area="Admin" asp-controller="Roles" asp-action="RoleUpdate" asp-route-id="@item.Id">Rol Güncelle</a>
+                    <a class="btn btn-warning my-1" asp-area="Admin" asp-controller="Roles" asp-action="RoleDelete" asp-route-id="@item.Id">Rol Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

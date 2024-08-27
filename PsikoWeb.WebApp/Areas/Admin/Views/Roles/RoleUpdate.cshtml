@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "RoleUpdate";
+}
+@model RoleUpdateViewModel
+<h1>RoleUpdate</h1>
+
+
+@if (ViewData["SuccessMessage"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewData["SuccessMessage"]
+    </div>
+}
+<hr />
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>Rol Güncelle</h2>
+        <form asp-action="RoleUpdate" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden"/>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Güncelle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Rol listesine geri dön</a>
+</div>
