@@ -14,6 +14,8 @@ namespace Repository
         }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         public override int SaveChanges()
         {
@@ -73,6 +75,12 @@ namespace Repository
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
+        }
+      
+        public void Initialise()
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
     }
