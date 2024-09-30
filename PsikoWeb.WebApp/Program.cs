@@ -1,6 +1,5 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Core.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ using PsikoWeb.WebApp.OptionsModel;
 using PsikoWeb.WebApp.Services;
 using Repository;
 using Service.Mapping;
-using Service.Services;
 using Service.Validations;
 using System.Reflection;
 using System.Security.Policy;
@@ -27,15 +25,13 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
 });
-
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddIdentityWithExtensions();
-builder.Services.AddTransient<IBookingService, BookingService>();
-builder.Services.AddHttpContextAccessor();
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModel()));
-builder.Services.AddControllersWithViews();
+
 builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
@@ -68,7 +64,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseAuthentication(); 
+app.UseAuthentication(); // Bu satýrý ekleyin
 app.UseAuthorization();
 
 app.MapControllerRoute(

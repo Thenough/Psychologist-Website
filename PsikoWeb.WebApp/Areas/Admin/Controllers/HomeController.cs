@@ -7,7 +7,7 @@ using Repository;
 
 namespace PsikoWeb.WebApp.Areas.Admin.Controllers
 {
-    
+    [Authorize(Roles ="admin")]
     [Area("Admin")]
     public class HomeController : Controller
     {

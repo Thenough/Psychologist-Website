@@ -2,6 +2,7 @@
 using Core.Models.Concrete;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using System.Reflection;
 
 namespace Repository
@@ -14,9 +15,7 @@ namespace Repository
         }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
-        public DbSet<Event> Events { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-
+        public DbSet<Event> Event { get; set; }
         public override int SaveChanges()
         {
             foreach (var item in ChangeTracker.Entries())
@@ -76,12 +75,14 @@ namespace Repository
 
             base.OnModelCreating(modelBuilder);
         }
-      
+
+
+        // Convenience method to recreate the database thus ensuring  the new database takes 
+        // account of any changes to the Models or DatabaseContext
         public void Initialise()
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
         }
-
     }
 }

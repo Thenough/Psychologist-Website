@@ -1,155 +1,96 @@
 ﻿using Core.Models.Concrete;
-using Core.Services;
-using Core.Utils;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using PsikoWeb.WebApp.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository;
-using System.Data;
 
 namespace PsikoWeb.WebApp.Controllers
 {
     public class EventController : Controller
     {
-        private readonly IBookingService _bookingService;
-        private readonly UserManager<AppUser> _userManager;
-        public EventController(IBookingService bookingService, UserManager<AppUser> userManager)
+        private readonly AppDbContext _context;
+        public EventController(AppDbContext context)
         {
-            _bookingService = bookingService;
-            _userManager = userManager;
+            _context = context;
         }
-        public async Task <IActionResult> Room(int id, string starts = null)
+        public async Task<IActionResult> Index()
         {
-            // get logged in user
-            var user = await _userManager.GetUserAsync(User);
-            var userId = user?.Id;
-
-           
-            if (starts == null)
-            {
-                
-                starts = DateTime.Now.StartOfWeek(DayOfWeek.Monday).ToString("yyyy-MM-dd");
-            }
-
-           
-            var events = _bookingService.GetUserEventsForRoom(id);
-
-            var vm = new EventViewModel { UserId = userId!, RoomId = id, Start = starts, End = starts, Events = events };
-            return View(vm);
-
-        }
-        [HttpGet]
-        public async Task<IActionResult> Add(int id, DateTime start, DateTime end)
-        {
-            // Kullanıcıyı bul
-            var user = await _userManager.FindByIdAsync(id.ToString());
-            if (user == null)
-            {
-                return NotFound(); 
-            }
-
-            // Odayı al
-            var room = _bookingService.GetRoom(id);
-            if (room == null)
-            {
-                return NotFound(); 
-            }
-
-           
-            var e = new Event
-            {
-                RoomId = room.Id,
-                UserId = user.Id,
-                Start = start,
-                End = end
-            };
-
-         
-            var v = EventViewModel.FromEvent(e);
-
-           
-            return View(v);
+            return View(await _context.Event.ToListAsync());
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
-        public IActionResult Add([Bind("RoomId", "UserId", "Start", "End")] EventViewModel vm)
+        public async Task<IActionResult> Create(Event evento)
         {
             if (ModelState.IsValid)
             {
-               
-                var newEvent = vm.ToEvent();
-
-            
-                var updatedEvent = _bookingService.AddEvent(newEvent);
-
-               
-                return RedirectToAction("Index"); 
+                _context.Add(evento);
+                await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Randevu başarıyla oluşturuldu";
+                return RedirectToAction("Index");
+            }
+            return View(evento);
+        }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound(); ;
             }
 
-           
-            return View(vm);
-        }
+            var evento = await _context.Event.FindAsync(id);
 
+            if (evento == null)
+            {
+                return NotFound();
+            }
 
-        public async Task<IActionResult> Edit(int id)
-        {
-          
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            return View(evento);
 
-           
-            var e = _bookingService.GetEvent(id);
-
-            var vm = EventViewModel.FromEvent(e);
-            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, [Bind] EventViewModel vm)
+        public async Task<IActionResult> Update(Event evento)
         {
             if (ModelState.IsValid)
             {
-                var updated = _bookingService.UpdateEvent(vm.ToEvent());
-                if (updated != null)
+                var eventoEncontrado = await _context.Event.FindAsync(evento.Id);
+                if (eventoEncontrado == null)
                 {
-
+                    return NotFound();
                 }
-                else
-                {
-                }
+
+                eventoEncontrado.Title = evento.Title;
+                eventoEncontrado.Date = evento.Date;
+                eventoEncontrado.Description = evento.Description;
+
+                _context.Update(eventoEncontrado);
+                await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Randevu başarıyla Güncellendi";
+                return RedirectToAction("Index");
             }
-            return View(vm);
+            return View(evento);
         }
-        [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var e = _bookingService.GetEvent(id);
-            if (e == null)
+            if (id == null || _context.Event == null)
             {
-
+                return NotFound();
             }
 
-            if (_bookingService.DeleteEvent(id))
-            {
-               
-            }
-            else
-            {
-                
-            }
-            return RedirectToAction(nameof(Room), new { Id = e.RoomId });
-        }
+            var evento = await _context.Event.FirstOrDefaultAsync(e => e.Id == id);
 
-      
-        [AcceptVerbs("GET", "POST")]
-        public IActionResult ValidateDate([BindRequired, FromQuery] EventViewModel vm)
-        {
-            if (!_bookingService.IsValidEvent(vm.ToEvent()))
+            if (evento == null)
             {
-                return Json($"Event overlaps another event.");
+                return NotFound();
             }
 
-            return Json(true);
+            _context.Event.Remove(evento);
+            await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = "Randevu başarıyla silindi";
+            return RedirectToAction("Index");
         }
     }
 }

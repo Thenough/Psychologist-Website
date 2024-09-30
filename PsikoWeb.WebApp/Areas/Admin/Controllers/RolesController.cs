@@ -19,7 +19,7 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-       
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
            var roles = await _roleManager.Roles.Select(x =>new RoleViewModel()
@@ -30,12 +30,12 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             return View(roles);
         }
 
-       
+        [Authorize(Roles ="admin")]
         public IActionResult RoleAdd()
         {
             return View();
         }
-        
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> RoleAdd(RoleAddViewModel request)
         {
@@ -49,7 +49,7 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             return RedirectToAction(nameof(RolesController.Index));
         }
 
-       
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> RoleUpdate(string id)
         {
             var roleToUpdate = await _roleManager.FindByIdAsync(id);
@@ -59,7 +59,7 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             }
             return View(new RoleUpdateViewModel() { Id = roleToUpdate.Id,Name = roleToUpdate.Name});
         }
-        
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult> RoleUpdate(RoleUpdateViewModel request)
         {
@@ -73,7 +73,7 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             ViewData["SuccessMessage"] = "Rol bilgisi güncellendi";
             return View();
         }
-       
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> RoleDelete(string id)
         {
             var roleToDelete = await _roleManager.FindByIdAsync(id);
@@ -89,7 +89,7 @@ namespace PsikoWeb.WebApp.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Rol başarılı şekilde silinmiştir";
             return RedirectToAction(nameof(RolesController.Index));
         }
-       
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> AssignRoleUser(string id)
         {
             var currentUser = await _userManager.FindByIdAsync(id);

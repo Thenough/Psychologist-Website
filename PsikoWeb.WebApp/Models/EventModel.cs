@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models.Concrete
+namespace PsikoWeb.WebApp.Modules
 {
-    public class Event
+    public class EventModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

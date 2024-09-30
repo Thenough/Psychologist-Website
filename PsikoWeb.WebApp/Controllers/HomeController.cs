@@ -1,7 +1,9 @@
 using Core.DTOs;
+using Core.Models.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PsikoWeb.WebApp.Modules;
 using PsikoWeb.WebApp.Services;
 using Repository;
@@ -16,12 +18,14 @@ namespace PsikoWeb.WebApp.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IEmailService _emailService;
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailService emailService)
+        private readonly AppDbContext _appDbContext;
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailService emailService, AppDbContext appDbContext)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
+            _appDbContext = appDbContext;
         }
 
         public IActionResult Index()
@@ -31,6 +35,25 @@ namespace PsikoWeb.WebApp.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+        public IActionResult Calendar()
+        {
+            List<Event> events = _appDbContext.Event.ToList();
+            List<object> data = new List<object>();
+            foreach (Event scheduler in events )
+            {
+                var item = new
+                {
+                    id = scheduler.Id,
+                    title = scheduler.Title,
+                    start = scheduler.Date,
+                    end = scheduler.Date.AddHours(1),
+
+                };
+                data.Add(item);
+            }
+            ViewBag.Event = JsonConvert.SerializeObject(data);
             return View();
         }
 
