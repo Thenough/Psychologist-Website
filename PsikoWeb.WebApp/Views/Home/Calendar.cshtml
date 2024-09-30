@@ -6,20 +6,37 @@
 
 <div id="calendar"></div>
 
+<!-- Modal HTML -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <!-- İçerik buraya yüklenecek -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
 
-                initialView: 'dayGridMonth', 
-                locale: 'tr', 
-                timeZone: 'local', 
-
+                initialView: 'timeGridWeek',
+                locale: 'tr',
+                timeZone: 'local',
                 headerToolbar: {
-                    left: 'prev,next today', 
-                    center: 'title', 
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth' 
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
                 },
                 events: @Html.Raw(ViewBag.Event),
 
@@ -27,20 +44,36 @@
                     var title = document.createElement('div');
                     title.classList.add('fc-event-title');
                     title.innerText = info.event.title;
-
+                    var time = document.createElement('div');
+                    time.classList.add('fc-event-time');
+                    time.innerText = `${new Date(info.event.start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })} - ${new Date(info.event.end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}`;
                     var container = document.createElement('div');
                     container.classList.add('fc-event-container');
                     container.appendChild(title);
+                    container.appendChild(time);
+                    
 
                     return { domNodes: [container] };
                 },
-                eventColor: '#378006', 
-                eventTextColor: '#ffffff', 
-                editable: true, 
-                selectable: true, 
+                eventColor: '#378006',
+                eventTextColor: '#ffffff',
+                editable: true,
+                selectable: true,
                 selectHelper: true,
-                    });
+                select: (arg) => {
+                    // Seçim yapıldığında popup aç
+                    showInPopup('@Url.Action("Create", "Event", new { id = 0 })', 'Randevu Oluştur');
+                    calendar.unselect(); // Seçimi kaldır
+                }
+            });
             calendar.render();
         });
+
+        function showInPopup(url, title) {
+            $('#modalLabel').text(title); // Modal başlığını ayarlama
+            $('#modalContent').load(url, function() { // URL'den içerik yükleme
+                $('#myModal').modal('show'); // Modal'ı göster
+            });
+        }
     </script>
 }
